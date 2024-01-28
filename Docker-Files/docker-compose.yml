@@ -1,14 +1,14 @@
 version: '3'
 services:
   airflow:
-    image: apache/airflow-norm-trial
+    image: new-image-name
     ports:
       - "9090:8080"
     volumes:
-      - "C:/Users/User/Documents/Important Docs/Data Internships/Data Engineering/Everlytics/from Bootcamp to Internship/Learning/Internship Learning/AirFlow/DAGs:/opt/airflow/dags/"
+      - "C:/Users/User/path-to-dir-containing-dags-on-local/DAGs:/opt/airflow/dags/"
     entrypoint: /bin/bash
     command: >
       -c '( airflow db init &&
-      airflow users create --username admin --password admin --firstname Pithun --lastname Admin --role Admin --email udohchigozie2017@gmail.com );
+      airflow users create --username admin --password admin --firstname Pithun --lastname Admin --role Admin --email iamadataengineer@gmail.com );
       airflow webserver & airflow scheduler'
     restart: unless-stopped
