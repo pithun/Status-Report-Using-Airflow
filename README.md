@@ -4,7 +4,9 @@
 ### Introduction
 As an upcoming Data Engineer, I had been trying to upskill myself by learning the relevant tools required so I did some research and decided to pick up Airflow. While learning,
 I started thinking of a practical task to give myself and then I thought about tracking my prayer and work status with Airflow. A task which I had planned to do with locker studio.
-            <center><img src="Images/sample_viz.jpg" alt="Sample Viz" width="350" height="350"></center>
+<p align="center">
+<img src="Images/sample_viz.png" alt="Sample Viz" width="300" height="250">
+</p>
 
 This repo contains how I was able to setup and run Airflow locally using both python (which was difficult to do) and Docker.
 
@@ -22,7 +24,7 @@ passing them to the Airflow workers.
 - The Airflow workers: Pick up tasks that are scheduled for execution and execute them. As such, the workers are responsible for actually “doing the work”
 - The Airflow webserver: Visualizes the DAGs parsed by the scheduler and provides the main interface for users to monitor DAG runs and their results
 
-#### Setting up Airflow using Python
+### Setting up Airflow using Python
 I had tried to `pip install apache-airflow` but after installation, and running `airflow webserver`, there was a dependency error "[pwd module is not available for windows](https://github.com/apache/airflow/discussions/24323)". 
 So, I had to use [kali linux subsystem on windows via WSL](https://medium.com/@tristian_56632/installing-apache-airflow-on-windows-usng-wsl-771e803762c9). This link contains a detailed step
 in running Airflow after the linux app has been installed. My steps are listed below also to give you that personal feeling.
@@ -45,7 +47,7 @@ in running Airflow after the linux app has been installed. My steps are listed b
 13. In a seperate kali window start the airflow scheduler `airflow scheduler`
 14. You're good to go!!
 
-#### Setting up Airflow using Docker
+### Setting up Airflow using Docker
 This is usually the recommended option for actual production as we usually don't run all the components on a single host and using 
 containers resembles using different hosts.
 
