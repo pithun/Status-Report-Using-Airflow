@@ -4,6 +4,8 @@
 ### Introduction
 As an upcoming Data Engineer, I had been trying to upskill myself by learning the relevant tools required so I did some research and decided to pick up Airflow. While learning,
 I started thinking of a practical task to give myself and then I thought about tracking my prayer and work status with Airflow. A task which I had planned to do with locker studio.
+            <center><img src="Images/sample_viz.jpg" alt="Sample Viz" width="350" height="350"></center>
+
 This repo contains how I was able to setup and run Airflow locally using both python (which was difficult to do) and Docker.
 
 ### Brief Introduction to the Basics of Airflow
