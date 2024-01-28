@@ -33,11 +33,11 @@ in running Airflow after the linux app has been installed. My steps are listed b
 5. Create a virtual environment `python3 -m venv Airflow_Learning`
 6. Activate your virtual environment `source Airflow_Learning/bin/activate`
 7. Initialize airflow db file `airflow db init`
-8. Create a user which you'll need to login when you get to the webserver `airflow users create --username admin --password admin --firstname Chigozie --lastname Udoh --role Admin --email udohchigozie2017@gmail.com`
-<img src="=Images/webserver.png" alt="kudi" width="200" height="200">
-9. 
-10. Create a dag directory in the airflow dir cd `/home/pithun/airflow` -> `mkdir dags`
-11. Copy DAG files from your local to airflow dir. In the Kali-Linux shell, my windows path was in `mnt/Users/User`. Then I copied using cp "path/DAGs/." "/home/pithun/airflow".
-12. Install the necessary modules required by your DAG e.g `pip install seaborn`
-13. Start the webserver with an optionally defined port `airflow webserver -p 8877`
-14. In a seperate kali window start the airflow scheduler `airflow scheduler`
+8. Create a user which you'll need to login when you get to the webserver `airflow users create --username admin --password admin --firstname Chigozie --lastname Udoh --role Admin --email iamadataengineer@gmail.com`
+<img src="=Images/webserver.jpg" alt="webserver" width="200" height="200">
+9. Create a dag directory in the airflow dir cd `/home/pithun/airflow` -> 
+`mkdir dags`
+10. Copy DAG files from your local to airflow dir. In the Kali-Linux shell, my windows path was in `mnt/Users/User`. Then I copied using cp "path/DAGs/." "/home/pithun/airflow".
+11. Install the necessary modules required by your DAG e.g `pip install seaborn`
+12. Start the webserver with an optionally defined port `airflow webserver -p 8877`
+13. In a seperate kali window start the airflow scheduler `airflow scheduler`
