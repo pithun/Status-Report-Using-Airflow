@@ -13,21 +13,22 @@ This repo contains how I was able to setup and run Airflow locally using both py
 ### Brief Introduction to the Basics of Airflow
 Apache Airflow is a workflow Orchestration tool. In simpler terms, it's a tool used to order tasks in a way we want to execute them. I'll use this project as an example, breaking it down 
 into steps;
-1. I connected to Googlesheets, did some data cleaning and got my dataset in a particular order, I then did some aggregation and the report plot was created.
+1. I connected to Google sheets, did some data cleaning and got my dataset in a particular order, did some aggregation and the report plot was created.
 2. I then sent the generated plot to myself via email.
-3. 
-These are two different tasks I wanted to achieve and this was what Airflow helped me do. Going deeper, I could also schedule this such that every Sunday or whenever, Aiflow will
+3. These are two different tasks I wanted to achieve and this was what Airflow helped me do. 
+
+Going deeper, I could also schedule this such that every Sunday or whenever, Aiflow will
 automatically trigger this Directed Acyclic Graph (DAG) as it's popularly called and I'll get the plots automatically. These are some of the strengths of Airflow.
 
 Aiflow consists of three main components;
-The Airflow scheduler: Parses DAGs, checks their schedule interval, and (if the DAGs’ schedule has passed) starts scheduling the DAGs’ tasks for execution by
+- The Airflow scheduler: Parses DAGs, checks their schedule interval, and (if the DAGs’ schedule has passed) starts scheduling the DAGs’ tasks for execution by
 passing them to the Airflow workers.
 - The Airflow workers: Pick up tasks that are scheduled for execution and execute them. As such, the workers are responsible for actually “doing the work”
 - The Airflow webserver: Visualizes the DAGs parsed by the scheduler and provides the main interface for users to monitor DAG runs and their results
 
 ### Setting up Airflow using Python
 I had tried to `pip install apache-airflow` but after installation, and running `airflow webserver`, there was a dependency error "[pwd module is not available for windows](https://github.com/apache/airflow/discussions/24323)". 
-So, I had to use [kali linux subsystem on windows via WSL](https://medium.com/@tristian_56632/installing-apache-airflow-on-windows-usng-wsl-771e803762c9). This link contains detailed
+So, I had to use [kali linux subsystem on windows via WSL](https://medium.com/@tristian_56632/installing-apache-airflow-on-windows-usng-wsl-771e803762c9). The link before this sentence contains detailed
 steps in running Airflow after the linux app has been installed. My steps are also listed below to give you that personal feeling.
 
 #### Steps 
@@ -40,6 +41,7 @@ steps in running Airflow after the linux app has been installed. My steps are al
 7. Initialize airflow db file `airflow db init`
 8. Create a user which you'll need to login when you get to the webserver `airflow users create --username admin --password admin --firstname Chigozie --lastname Udoh --role Admin --email iamadataengineer@gmail.com`
 <img src="Images/webserver.jpg" alt="webserver" width="500" height="250">
+
 9. Create a dag directory in the airflow dir cd `/home/pithun/airflow` -> 
 `mkdir dags`
 10. Copy DAG files from your local to airflow dir. In the Kali-Linux window, my local drive path was in `mnt/Users/User`. Then I copied using cp "mnt/Users/User/DAGs/." "/home/pithun/airflow".
@@ -62,5 +64,4 @@ This is usually the recommended option for actual production as we usually don't
 `image` variable taking the `new-image-name`
 6. Run `docker-compose up` after navigating to `docker-compose.yml` file dir to execute it
 7. To stop the container, you can manually pause it in docker app
-8. As an extra, in your powershell, you can use `docker exec -it container_name /bin/bash` to get into the container. The container name
-can be found in the docker app
+8. As an extra, in your powershell, you can use `docker exec -it container_name /bin/bash` to get into the container. The container name can be found in the docker app
