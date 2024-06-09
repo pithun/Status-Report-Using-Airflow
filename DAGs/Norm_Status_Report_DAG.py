@@ -28,8 +28,10 @@ def connect_to_sheet():
 def Generate_Report():
     df=connect_to_sheet()
     # Specify start date as a week from current date
-    today = dt.date.today()
-    start_day = today - dt.timedelta(days=7)
+    #today = dt.date.today()
+    #start_day = today - dt.timedelta(days=7)
+    start_day = {{execution_date}}
+    today=start_day + dt.timedelta(days=7)
     today = today.strftime("%Y-%m-%d")
     start_day = start_day.strftime("%Y-%m-%d")
 
