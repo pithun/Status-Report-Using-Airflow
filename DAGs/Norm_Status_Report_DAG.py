@@ -17,30 +17,28 @@ dag = DAG(
 
 # Connect to the Google sheet directly using Pandas
 def connect_to_sheet():
-    sheet_id = 'input_your_sheetid'
+    sheet_id = 'input your id'
     sheet_name = 'Norms'
     url = f'https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={sheet_name}'
     df = pd.read_csv(url, parse_dates = ['Date'], infer_datetime_format = True) 
     df['Date'] = pd.to_datetime(df['Date'], format='%Y-%m-%d')
     return df
 
-# Implementing required functions
-def Generate_Report():
+def Generate_vizes(**kwargs):
+    execution_date = kwargs["execution_date"]    #<datetime> type with timezone
     df=connect_to_sheet()
     # Specify start date as a week from current date
     #today = dt.date.today()
     #start_day = today - dt.timedelta(days=7)
-    start_day = {{execution_date}}
-    today=start_day + dt.timedelta(days=7)
+    start_day = execution_date
+    today=start_day + dt.timedelta(days=6)
     today = today.strftime("%Y-%m-%d")
     start_day = start_day.strftime("%Y-%m-%d")
 
     # selecting data from past 7 days till today
     needed_data = df[np.logical_and(df['Date'] >= start_day, df['Date'] <= today)]
-    return needed_data, start_day, today
 
-def Generate_vizes():
-    unpack =Generate_Report()
+    unpack =[needed_data, start_day, today]
     data = unpack[0]
 
     # Applying function to replace Yes with 1 and No with 0 and also filling Na with 0
