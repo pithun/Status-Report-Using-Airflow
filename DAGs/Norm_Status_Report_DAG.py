@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import datetime as dt
 import pathlib
+import functools as ft
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 
@@ -16,17 +17,40 @@ dag = DAG(
 )
 
 # Connect to the Google sheet directly using Pandas
-def connect_to_sheet():
-    sheet_id = 'input your id'
-    sheet_name = 'Norms'
-    url = f'https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={sheet_name}'
-    df = pd.read_csv(url, parse_dates = ['Date'], infer_datetime_format = True) 
-    df['Date'] = pd.to_datetime(df['Date'], format='%Y-%m-%d')
-    return df
+def connect_to_sheets():
+    sheet_ids = ['id1', 'id2',
+                'id3']
+    sheet_names = ['name1', 'name2', 'name3']
+
+    # You have to allow the sheet to be editable by all from google sheets settings
+    urls = [f'https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={sheet_name}' for sheet_id, sheet_name 
+            in zip(sheet_ids, sheet_names)]
+    
+    df_norm1 = pd.read_csv(urls[0], parse_dates = ['Date'], infer_datetime_format = True)
+    df_norm2 = pd.read_csv(urls[1], parse_dates = ['Date'], infer_datetime_format = True)
+    df_work = pd.read_csv(urls[2], parse_dates = ['Date'], infer_datetime_format = True)
+
+    dfs = [df_norm1, df_norm2, df_work]
+    use_dfs=[]
+
+    for df in dfs:
+        # Parsing Dates
+        df['Date'] = pd.to_datetime(df['Date'], format='%Y-%m-%d')
+        
+        # Removing unnamed columns
+        cols=df.columns
+        use_cols = [a for a in cols if 'unnamed:' not in a.lower()]
+        df = df[use_cols]
+        use_dfs.append(df)
+    
+    # Joining all the dfs on date columns    
+    df_final = ft.reduce(lambda left, right: pd.merge(left, right, on=['Date', 'Day'], how='left'), use_dfs)
+    return df_final.drop('Day', axis=1)
+
 
 def Generate_vizes(**kwargs):
     execution_date = kwargs["execution_date"]    #<datetime> type with timezone
-    df=connect_to_sheet()
+    df=connect_to_sheets()
     # Specify start date as a week from current date
     #today = dt.date.today()
     #start_day = today - dt.timedelta(days=7)
@@ -48,10 +72,11 @@ def Generate_vizes(**kwargs):
 
     # Making directory to store saved images
     pathlib.Path("/mnt/c/Users/User/Viz").mkdir(parents=True, exist_ok=True)
+    pathlib.Path("/mnt/c/Users/User/Viz/Work").mkdir(parents=True, exist_ok=True)
 
     # Set the desired columns as the index
     df_mapped.set_index(['Date'], inplace=True)
-    df_mapped = df_mapped.iloc[:,1:6]
+    df_mapped = df_mapped.iloc[:,1:8]
     df_use=df_mapped.copy().transpose()
 
     # Creating the Day_count
