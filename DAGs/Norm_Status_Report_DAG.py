@@ -77,7 +77,7 @@ def Generate_vizes(**kwargs):
     # Set the desired columns as the index
     df_mapped.set_index(['Date'], inplace=True)
     df_mapped_work = df_mapped.iloc[:,10:]
-    df_mapped = df_mapped.iloc[:,1:7]
+    df_mapped = df_mapped.iloc[:,:7]
     
     df_use=df_mapped.copy().transpose()
     df_use_work=df_mapped_work.copy().transpose()
