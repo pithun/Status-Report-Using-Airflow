@@ -76,11 +76,15 @@ def Generate_vizes(**kwargs):
 
     # Set the desired columns as the index
     df_mapped.set_index(['Date'], inplace=True)
-    df_mapped = df_mapped.iloc[:,1:8]
+    df_mapped_work = df_mapped.iloc[:,10:]
+    df_mapped = df_mapped.iloc[:,1:7]
+    
     df_use=df_mapped.copy().transpose()
+    df_use_work=df_mapped_work.copy().transpose()
 
     # Creating the Day_count
     df_use['Day_Count']=df_use.sum(axis=1)
+    df_use_work['D_Count']=df_use_work.sum(axis=1)
 
     # Creating Visualization
     ax=sns.barplot(x=df_use.index, y=df_use.Day_Count)
@@ -91,8 +95,18 @@ def Generate_vizes(**kwargs):
     plt.xlabel('Day_Count')
     plt.xlabel('Norm')
     plt.xticks(rotation=45)
-    plt.title('Report for '+unpack[1]+'-'+unpack[2], fontsize=12)
-    plt.savefig('/mnt/c/Users/User/Viz/Viz_'+unpack[1]+'-'+unpack[2], dpi=500, bbox_inches= 'tight')
+    plt.title('Report for '+str(unpack[1])+'-'+str(unpack[2]), fontsize=12)
+    plt.savefig('/mnt/c/Users/User/Viz/Viz_'+str(unpack[1])+'-'+str(unpack[2]), dpi=500, bbox_inches= 'tight')
+    plt.clf()
+
+    ax_work=sns.barplot(x=df_use_work.index, y=df_use_work.D_Count)
+    for container1 in ax_work.containers:
+        ax_work.bar_label(container1, fmt='%d', label_type='edge', color='black')
+    plt.xlabel('Day_Count')
+    plt.xlabel('Work')
+    plt.xticks(rotation=45)
+    plt.title('Report for '+str(unpack[1])+'-'+str(unpack[2]), fontsize=12)
+    plt.savefig('/mnt/c/Users/User/Viz/Work/Work_Viz_'+str(unpack[1])+'-'+str(unpack[2]), dpi=500, bbox_inches= 'tight')
 
 
 
